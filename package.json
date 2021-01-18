@@ -1,0 +1,33 @@
+{
+  "name": "esbuild-svelte-paths",
+  "version": "0.1.0",
+  "description": "ESBuild Plugin to resolve shortcuted pathes for Svelte components",
+  "main": "dist/plugin.js",
+  "module": "dist/plugin.esm.js",
+  "scripts": {
+    "build": "node esbuild",
+    "pretest": "npm run build",
+    "test": "cd tests && node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexxNB/esbuild-svelte-paths.git"
+  },
+  "author": "Alexey Schebelev",
+  "keywords": [
+    "svelte",
+    "esbuild",
+    "paths",
+    "shortcut",
+    "resolve"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlexxNB/esbuild-svelte-paths/issues"
+  },
+  "homepage": "https://github.com/AlexxNB/esbuild-svelte-paths#readme",
+  "devDependencies": {
+    "esbuild": "^0.8.33",
+    "uvu": "^0.5.1"
+  }
+}
