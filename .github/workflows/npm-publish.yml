@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-20.10
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v1
       - name: Setup Node
@@ -22,7 +22,7 @@ jobs:
 
   publish-npm:
     needs: test
-    runs-on: ubuntu-20.10
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v1
       - name: Setup Node
