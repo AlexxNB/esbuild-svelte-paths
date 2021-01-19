@@ -1,7 +1,7 @@
 {
   "name": "esbuild-svelte-paths",
   "version": "0.1.0",
-  "description": "ESBuild Plugin to resolve shortcuted pathes for Svelte components",
+  "description": "ESBuild Plugin that resolves shortcuted pathes for Svelte components",
   "main": "dist/plugin.js",
   "module": "dist/plugin.esm.js",
   "scripts": {
