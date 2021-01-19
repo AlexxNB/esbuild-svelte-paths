@@ -52,3 +52,7 @@ esbuild.build({
 })
 
 ```
+
+## Caveat
+
+If you use `ctr-click` to go to an import declaration or a path autocomplition in the IDE – you loose this feature for Svelte components imported with shorcuted path. 
