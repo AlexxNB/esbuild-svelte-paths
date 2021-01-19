@@ -6,6 +6,8 @@ const tsconfig = './tsconfig.json';
 
 export function sveltePaths(){
 
+    const cache = new Map();
+
     const conf = fs.existsSync(jsconfig) 
         ? JSON.parse(fs.readFileSync(jsconfig, 'utf8')) 
         : fs.existsSync(tsconfig)
@@ -34,7 +36,10 @@ export function sveltePaths(){
     return {
         name: 'esbuild-svelte-paths',
         setup(build) {
-            build.onResolve({ filter: /\/[A-Z]\w+$/ }, args => {
+            build.onResolve({ filter: /\/[A-Z]\w+$/ }, async args => {
+
+                if(cache.has(args.path)) return {path: cache.get(args.path)};
+
                 let fullpath = unAlias(args.path);
                 if(fullpath.startsWith('.')) fullpath = path.join(args.resolveDir,fullpath);
                 
@@ -42,10 +47,27 @@ export function sveltePaths(){
  
                 const dirMatch = path.join(fullpath,name+'.svelte');
                 const fileMatch = fullpath+'.svelte';
- 
-                if(fs.existsSync(dirMatch)) return {path: dirMatch};
-                if(fs.existsSync(fileMatch)) return {path: fileMatch};
+
+                let resolved = args.path;
+
+                if( (await fileExists(dirMatch)) ) 
+                    resolved = dirMatch;
+                else if( (await fileExists(fileMatch)) ) 
+                    resolved = fileMatch;
+
+                cache.set(args.path,resolved)
+                return {path: resolved};
+                
             });
         }
     }
+}
+
+async function fileExists(path){
+    try{
+        await fs.promises.access(path);
+    }catch{
+        return false;
+    }
+    return true;
 }
