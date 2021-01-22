@@ -1,17 +1,27 @@
 const fs = require('fs');
 const path = require('path');
 
-const jsconfig = './jsconfig.json';
-const tsconfig = './tsconfig.json';
+const confFiles = [
+    "tsconfig.json",
+    "jsconfig.json"
+]
 
 export function sveltePaths(){
 
-    const conf = fs.existsSync(jsconfig) 
-        ? JSON.parse(fs.readFileSync(jsconfig, 'utf8')) 
-        : fs.existsSync(tsconfig)
-            ? JSON.parse(fs.readFileSync(tsconfig, 'utf8')) 
-            : null;
+    let conf = null;
 
+    const confFile = fs.existsSync(confFiles[0]) 
+                        ? confFiles[0]
+                        : fs.existsSync(confFiles[1]) 
+                            ? confFiles[1] 
+                            : null
+
+    
+    try{
+        if(confFile) conf = JSON.parse(stripComments(fs.readFileSync(confFile, 'utf8')));  
+    }catch{
+        console.warn(`[esbuild-svelte-paths] Your ${confFile} is invalid and ignored`);
+    }
 
     function unAlias(filename){
 
@@ -22,7 +32,7 @@ export function sveltePaths(){
             const cleaned = unstar(p);
             if(filename === cleaned || filename.startsWith(cleaned)){
                 return path.resolve(filename.replace(cleaned,path.join(
-                    conf.baseURL || '',
+                    conf.baseURL || conf.compilerOptions.baseURL || '',
                     unstar(conf.compilerOptions.paths[p][0])
                 )))
             }
@@ -60,4 +70,8 @@ async function fileExists(path){
         return false;
     }
     return true;
+}
+
+function stripComments(text){
+    return text.replace(/\/\/.*$|^\s*\/\*[\s\S]*\*\/\s*$/gm,'');
 }

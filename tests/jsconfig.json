@@ -1,8 +1,11 @@
 {
     "baseURL":".",
     "compilerOptions": {
+        // comment1
         "paths": {
-            "@foo/*":["./Foo/*"]
+            "@foo/*":["./Foo/*"] //comment2
         }
+        /*frkfirjf
+        frifr0fk*/
     }
 }

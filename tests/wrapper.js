@@ -10,7 +10,7 @@ module.exports = function(path){
                     path,
                     resolveDir: __dirname
                 })
-                return resolve(result.path);
+                return resolve(result && result.path || path);
             }
         });
     });
