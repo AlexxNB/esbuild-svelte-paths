@@ -44,10 +44,30 @@ const {sveltePaths} = require('esbuild-svelte-paths');
 const sveltePlugin = require('esbuild-any-svelte-plugin');
 
 esbuild.build({
-    ....
+    ...
     plugins:[
         sveltePaths(),
         sveltePlugin()
+    ]
+})
+
+```
+
+## Configuration
+
+You can pass a configuration object to plugin function as argument. At the moment it have only one option - `extension`, which default value is `svelte`. This option define files of what type should be searched by plugin. 
+
+You can set different file extension to use this plugin with another frameworks, like [Malina](https://malinajs.github.io).
+
+```js
+const {sveltePaths} = require('esbuild-svelte-paths');
+const malinaPlugin = require('esbuild-any-malina-plugin');
+
+esbuild.build({
+    ...
+    plugins:[
+        sveltePaths( {extension: 'xht'} ),
+        malinaPlugin()
     ]
 })
 

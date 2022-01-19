@@ -6,7 +6,12 @@ const confFiles = [
     "jsconfig.json"
 ]
 
-export function sveltePaths(){
+export function sveltePaths(options){
+
+    options = {
+        extension: 'svelte',
+        ...options
+    }
 
     let conf = null;
 
@@ -51,8 +56,8 @@ export function sveltePaths(){
                 
                 const name = path.basename(fullpath);
  
-                const dirMatch = path.join(fullpath,name+'.svelte');
-                const fileMatch = fullpath+'.svelte';
+                const dirMatch = path.join(fullpath,`${name}.${options.extension}`);
+                const fileMatch = `${fullpath}.${options.extension}`;
 
                 if( (await fileExists(dirMatch)) ) 
                     return {path: dirMatch};
