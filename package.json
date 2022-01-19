@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/AlexxNB/esbuild-svelte-paths#readme",
   "devDependencies": {
-    "esbuild": "^0.8.33",
-    "uvu": "^0.5.1"
+    "esbuild": "^0.14.11",
+    "uvu": "^0.5.3"
   }
 }
